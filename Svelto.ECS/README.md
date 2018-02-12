@@ -1,21 +1,23 @@
-Svelto Entity Component System 2.0
+Svelto Entity Component System for Unity
 =====================================
+
+**Note: The alpha stage of Svelto 2.0 is almost completed, so if you are here to experiment with it, please use the current alpha branch**
 
 Real Entity-Component-System for c# and Unity (it can be adapted for other c# platforms too). Enables to write encapsulated, uncoupled, highly efficient, data oriented, cache friendly, multi-threaded, code without pain.
 
-you can find a working example to learn how to use the framework here:
+you can find working examples to learn how to use the framework here:
 
-https://github.com/sebas77/Svelto-ECS-Example
+https://github.com/sebas77/Svelto-ECS-Example (unity)
+
+https://github.com/sebas77/Svelto.ECS.Vanilla.Example (.net core and standard)
 
 I advise to clone the example repositories separately from the framework one, both under the same Unity project Assets folder.
 
-relative articles:
-
-http://www.sebaslab.com/ecs-1-0/
-
-http://www.sebaslab.com/svelto-ecs-svelto-tasks-to-write-data-oriented-cache-friendly-multi-threaded-code-in-unity/
+relative article:
 
 http://www.sebaslab.com/svelto-ecs-2-0-almost-production-ready/
+
+http://www.sebaslab.com/ecs-1-0/
 
 If you want to know more about the theory and rationale behind this framework:
 
@@ -33,11 +35,11 @@ http://www.sebaslab.com/the-truth-behind-inversion-of-control-part-iv-dependency
 
 http://www.sebaslab.com/the-truth-behind-inversion-of-control-part-v-drifting-away-from-ioc-containers/
 
-**_Note: Dear Svelto Users : Although I am committed to help you and write articles as much as I can, I will never be able to keep all the documentation up to date. If you are a happy svelto user and you want to contribute, please feel free to update the github wiki! 🙏👊_**
+new article on optimizations:
 
-**Note: don't beat yourself if you find Svelto.ECS hard to use at first. The framework is very light in features, but it forces the use of a new coding paradigm and shifting code paradigm is hard! I will try to clarify all the concepts writing more and more articles**
+http://www.sebaslab.com/svelto-ecs-svelto-tasks-to-write-data-oriented-cache-friendly-multi-threaded-code-in-unity/
 
-**Note: The folders Svelto.ECS, Svelto.Tasks and Svelto.Common, where present, are submodules pointing to the relavite repositories. If you find them empty, you need to update them through the submodule command. Check some instructions here: https://github.com/sebas77/Svelto.ECS.Vanilla.Example/wiki**
+Note: if you ever build something with Svelto.ECS that you can share with the community, please do and let me know. Other coders need more examples.
 
 Copyright (c) Sebastiano Mandalà
 
