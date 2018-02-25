@@ -2,11 +2,17 @@ using Svelto.WeakEvents;
 
 namespace Svelto.ECS
 {
-    public class DispatchOnSet<T>
+    public class DispatchOnSet<T> where T:struct
     {
         public DispatchOnSet(int senderID)
         {
             _senderID = senderID;
+            _subscribers = new WeakEvent<int, T>();
+        }
+        
+        public DispatchOnSet()
+        {
+            _senderID    = -1;
             _subscribers = new WeakEvent<int, T>();
         }
 
@@ -36,8 +42,8 @@ namespace Svelto.ECS
         }
 
         protected T      _value;
-        protected int    _senderID;
+        readonly int    _senderID;
 
-        protected WeakEvent<int, T> _subscribers;
+        WeakEvent<int, T> _subscribers;
     }
 }
