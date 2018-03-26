@@ -12,7 +12,8 @@ namespace Svelto.ECS.Extension
 
         public void Dispatch()
         {
-            _subscribers?.Invoke(_entityId, _component);
+            if (_subscribers != null)
+                _subscribers.Invoke(_entityId, _component);
         }
 
         public void Notify(Action<int, T> action)
