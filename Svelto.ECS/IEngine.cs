@@ -1,15 +1,17 @@
 namespace Svelto.ECS.Internal
 {
-    public interface IHandleEntityViewEngine : IEngine
-    {
-        void Add(IEntityView    entityView);
-        void Remove(IEntityView entityView);
-    }
+    public interface IReactEngine: IEngine
+    {}
+    
+    public interface IReactOnAddAndRemove : IReactEngine
+    {}
+
+    public interface IReactOnSwap : IReactEngine
+    {}
 }
 
 namespace Svelto.ECS
 {
     public interface IEngine
-    {
-    }
+    {}
 }

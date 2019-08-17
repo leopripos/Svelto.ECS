@@ -5,57 +5,36 @@ using Svelto.DataStructures;
 using Svelto.Utilities;
 
 namespace Svelto.ECS
-{   
-    //todo: can I remove the ID from the struct?
-    
-    public interface IEntityView
+{
+    static class EntityView<T> where T: struct, IEntityStruct
     {
-        EGID ID { get; }
-    }
-    
-    public interface IEntityStruct:IEntityView
-    {
-        new EGID ID { get; set; }
-    }
+        internal static readonly FasterList<KeyValuePair<Type, ActionCast<T>>> cachedFields;
 
-    public class EntityView : IEntityView
-    {
-        public EGID ID { get { return _ID; } }
-
-        internal FasterList<KeyValuePair<Type, CastedAction<EntityView>>> entityViewBlazingFastReflection;
-        internal EGID _ID;
-    }
-
-    static class EntityView<T> where T: EntityView, new()
-    {
-        internal static T BuildEntityView(EGID ID) 
+        static EntityView()
         {
-            if (FieldCache<T>.list.Count == 0)
+            cachedFields = new FasterList<KeyValuePair<Type, ActionCast<T>>>();
+                
+            var type = typeof(T);
+
+            var fields = type.GetFields(BindingFlags.Public |
+                                        BindingFlags.Instance);
+    
+            for (int i = fields.Length - 1; i >= 0; --i)
             {
-                var type = typeof(T);
+                var field = fields[i];
 
-                var fields = type.GetFields(BindingFlags.Public |
-                                            BindingFlags.Instance);
-
-                for (int i = fields.Length - 1; i >= 0; --i)
-                {
-                    var field = fields[i];
-
-                    CastedAction<EntityView> setter = FastInvoke<T>.MakeSetter<EntityView>(field);
+                ActionCast<T> setter = FastInvoke<T>.MakeSetter(field);
                     
-                    FieldCache<T>.list.Add(new KeyValuePair<Type, CastedAction<EntityView>>(field.FieldType, setter));
-                }
+                cachedFields.Add(new KeyValuePair<Type, ActionCast<T>>(field.FieldType, setter));
             }
-
-            return new T { _ID = ID, entityViewBlazingFastReflection = FieldCache<T>.list };
         }
 
-        //check if I can remove W
-        static class FieldCache<W> where W:T
+        internal static void InitCache()
+        {}
+        
+        internal static void BuildEntityView(out T entityView) 
         {
-            internal static readonly FasterList<KeyValuePair<Type, CastedAction<EntityView>>> list
-                = new FasterList<KeyValuePair<Type, CastedAction<EntityView>>>();
+            entityView = new T {};
         }
     }
 }
-

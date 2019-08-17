@@ -1,49 +1,45 @@
+using System;
 using Svelto.WeakEvents;
 
 namespace Svelto.ECS
 {
     public class DispatchOnSet<T> where T:struct
     {
-        public DispatchOnSet(int senderID)
-        {
+        public DispatchOnSet(EGID senderID)
+        {      
+            _subscribers = new WeakEvent<EGID, T>();
+            
             _senderID = senderID;
-            _subscribers = new WeakEvent<int, T>();
         }
         
-        public DispatchOnSet()
-        {
-            _senderID    = -1;
-            _subscribers = new WeakEvent<int, T>();
-        }
-
         public T value
         {
             set
             {
                 _value = value;
 
-                _subscribers.Invoke(_senderID, value);
-            }
-
-            get 
-            {
-                return _value;
+                if(_paused == false)
+                    _subscribers.Invoke(_senderID, value);
             }
         }
-
-        public void NotifyOnValueSet(System.Action<int, T> action)
+        
+        public void NotifyOnValueSet(Action<EGID, T> action)
         {
-            _subscribers += action;
+            _subscribers += action;    
         }
 
-        public void StopNotify(System.Action<int, T> action)
+        public void StopNotify(Action<EGID, T> action)
         {
             _subscribers -= action;
         }
 
-        protected T      _value;
-        readonly int    _senderID;
+        public void PauseNotify() { _paused = true; }
+        public void ResumeNotify() { _paused = false; }
 
-        WeakEvent<int, T> _subscribers;
+        protected T  _value;
+        readonly EGID _senderID;
+
+        WeakEvent<EGID, T> _subscribers;
+        bool _paused;
     }
 }

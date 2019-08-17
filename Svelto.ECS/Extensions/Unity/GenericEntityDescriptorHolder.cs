@@ -1,14 +1,24 @@
 #if UNITY_5 || UNITY_5_3_OR_NEWER
-namespace Svelto.ECS
+using UnityEngine;
+
+namespace Svelto.ECS.Unity
 {
-    public class GenericEntityDescriptorHolder<T>: 
-        UnityEngine.MonoBehaviour , IEntityDescriptorHolder
-            where T: class, IEntityDescriptor, new()
+    public abstract class GenericEntityDescriptorHolder<T>: 
+        MonoBehaviour , IEntityDescriptorHolder
+            where T: IEntityDescriptor, new()
     {
-        public EntityDescriptorInfo RetrieveDescriptor()
+        public IEntityDescriptor GetDescriptor()
         {
-            return EntityDescriptorTemplate<T>.Default;
+            return EntityDescriptorTemplate<T>.descriptor;
         }
+
+        public string groupName => _groupName;
+        public ushort id => _id;
+
+#pragma warning disable 649
+        [SerializeField] string _groupName;
+        [SerializeField] ushort _id = 0;
+#pragma warning restore 649
     }
 }
 #endif

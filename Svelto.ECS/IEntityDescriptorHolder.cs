@@ -2,6 +2,9 @@ namespace Svelto.ECS
 {
     public interface IEntityDescriptorHolder
     {
-        EntityDescriptorInfo RetrieveDescriptor();
+        IEntityDescriptor GetDescriptor();
+
+        string groupName { get; }
+        ushort id { get; }
     }
 }

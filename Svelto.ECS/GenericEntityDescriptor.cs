@@ -1,108 +1,104 @@
 ﻿namespace Svelto.ECS
 {
-    public abstract class GenericEntityDescriptor<T>:IEntityDescriptor where T : EntityView, new()
+    public abstract class GenericEntityDescriptor<T> : IEntityDescriptor where T : struct,  IEntityStruct
     {
-        static GenericEntityDescriptor()
-        {
-            entityViewBuilders = new IEntityViewBuilder[] { new EntityViewBuilder<T>() };
-        }
-        
-        public IEntityViewBuilder[] entityViewsToBuild
-        {
-            get { return entityViewBuilders; }
-        }
+        static readonly IEntityBuilder[] _entityBuilders;
+        static GenericEntityDescriptor() { _entityBuilders = new IEntityBuilder[] {new EntityBuilder<T>()}; }
 
-        public static readonly IEntityViewBuilder[] entityViewBuilders;
-        
+        public IEntityBuilder[] entitiesToBuild => _entityBuilders;
     }
 
-    public abstract class GenericEntityDescriptor<T, U> : IEntityDescriptor     where T : EntityView, new() 
-                                                                       where U : EntityView, new()
+    public abstract class GenericEntityDescriptor<T, U> : IEntityDescriptor
+        where T : struct,  IEntityStruct where U : struct,  IEntityStruct
     {
+        static readonly IEntityBuilder[] _entityBuilders;
+
         static GenericEntityDescriptor()
         {
-            entityViewBuilders = new IEntityViewBuilder[] {new EntityViewBuilder<T>(), new EntityViewBuilder<U>()};
+            _entityBuilders = new IEntityBuilder[] {new EntityBuilder<T>(), new EntityBuilder<U>()};
         }
 
-        public IEntityViewBuilder[] entityViewsToBuild
-        {
-            get { return entityViewBuilders; }
-        }
-        
-        public static readonly IEntityViewBuilder[] entityViewBuilders;
+        public IEntityBuilder[] entitiesToBuild => _entityBuilders;
     }
 
-    public abstract class GenericEntityDescriptor<T, U, V> : IEntityDescriptor     where T : EntityView, new()
-                                                                          where U : EntityView, new()
-                                                                          where V : EntityView, new()
+    public abstract class GenericEntityDescriptor<T, U, V> : IEntityDescriptor
+        where T : struct,  IEntityStruct where U : struct,  IEntityStruct where V : struct,  IEntityStruct
     {
+        static readonly IEntityBuilder[] _entityBuilders;
+
         static GenericEntityDescriptor()
         {
-            entityViewBuilders = new IEntityViewBuilder[] {new EntityViewBuilder<T>(), new EntityViewBuilder<U>(), new EntityViewBuilder<V>()};
+            _entityBuilders = new IEntityBuilder[]
+            {
+                new EntityBuilder<T>(),
+                new EntityBuilder<U>(),
+                new EntityBuilder<V>()
+            };
         }
 
-        public IEntityViewBuilder[] entityViewsToBuild
-        {
-            get { return entityViewBuilders; }
-        }
-        
-        public static readonly IEntityViewBuilder[] entityViewBuilders;
+        public IEntityBuilder[] entitiesToBuild => _entityBuilders;
     }
 
-    public abstract class GenericEntityDescriptor<T, U, V, W> : IEntityDescriptor     where T : EntityView, new()
-                                                                             where U : EntityView, new()
-                                                                             where V : EntityView, new()
-                                                                             where W : EntityView, new()
+    public abstract class GenericEntityDescriptor<T, U, V, W> : IEntityDescriptor
+        where T : struct,  IEntityStruct where U : struct,  IEntityStruct where V : struct,  IEntityStruct
+        where W : struct,  IEntityStruct
     {
+        static readonly IEntityBuilder[] _entityBuilders;
+
         static GenericEntityDescriptor()
         {
-            entityViewBuilders = new IEntityViewBuilder[] {new EntityViewBuilder<T>(), new EntityViewBuilder<U>(), new EntityViewBuilder<V>(), new EntityViewBuilder<W>()};
+            _entityBuilders = new IEntityBuilder[]
+            {
+                new EntityBuilder<T>(),
+                new EntityBuilder<U>(),
+                new EntityBuilder<V>(),
+                new EntityBuilder<W>()
+            };
         }
 
-        public IEntityViewBuilder[] entityViewsToBuild
-        {
-            get { return entityViewBuilders; }
-        }
-        
-        public static readonly IEntityViewBuilder[] entityViewBuilders;
+        public IEntityBuilder[] entitiesToBuild => _entityBuilders;
     }
 
-    public abstract class GenericEntityDescriptor<T, U, V, W, X> : IEntityDescriptor     where T : EntityView, new()
-                                                                                where U : EntityView, new()
-                                                                                where V : EntityView, new()
-                                                                                where W : EntityView, new()
-                                                                                where X : EntityView, new()
+    public abstract class GenericEntityDescriptor<T, U, V, W, X> : IEntityDescriptor
+        where T : struct,  IEntityStruct where U : struct,  IEntityStruct where V : struct,  IEntityStruct
+        where W : struct,  IEntityStruct where X : struct,  IEntityStruct
     {
+        static readonly IEntityBuilder[] _entityBuilders;
+
         static GenericEntityDescriptor()
         {
-            entityViewBuilders = new IEntityViewBuilder[] {new EntityViewBuilder<T>(), new EntityViewBuilder<U>(), new EntityViewBuilder<V>(), new EntityViewBuilder<W>(), new EntityViewBuilder<X>()};
+            _entityBuilders = new IEntityBuilder[]
+            {
+                new EntityBuilder<T>(),
+                new EntityBuilder<U>(),
+                new EntityBuilder<V>(),
+                new EntityBuilder<W>(),
+                new EntityBuilder<X>()
+            };
         }
 
-        public IEntityViewBuilder[] entityViewsToBuild
-        {
-            get { return entityViewBuilders; }
-        }
-        
-        public static readonly IEntityViewBuilder[] entityViewBuilders;
+        public IEntityBuilder[] entitiesToBuild => _entityBuilders;
     }
 
-    public abstract class GenericEntityDescriptor<T, U, V, W, X, Y> : IEntityDescriptor     where T : EntityView, new()
-                                                                                   where U : EntityView, new()
-                                                                                   where V : EntityView, new()
-                                                                                   where W : EntityView, new()
-                                                                                   where X : EntityView, new()
-                                                                                   where Y : EntityView, new()
+    public abstract class GenericEntityDescriptor<T, U, V, W, X, Y> : IEntityDescriptor
+        where T : struct,  IEntityStruct where U : struct,  IEntityStruct where V : struct,  IEntityStruct
+        where W : struct,  IEntityStruct where X : struct,  IEntityStruct where Y : struct,  IEntityStruct
     {
+        static readonly IEntityBuilder[] _entityBuilders;
+
         static GenericEntityDescriptor()
         {
-            entityViewBuilders = new IEntityViewBuilder[] {new EntityViewBuilder<T>(), new EntityViewBuilder<U>(), new EntityViewBuilder<V>(), new EntityViewBuilder<W>(), new EntityViewBuilder<X>(), new EntityViewBuilder<Y>()};
+            _entityBuilders = new IEntityBuilder[]
+            {
+                new EntityBuilder<T>(),
+                new EntityBuilder<U>(),
+                new EntityBuilder<V>(),
+                new EntityBuilder<W>(),
+                new EntityBuilder<X>(),
+                new EntityBuilder<Y>()
+            };
         }
 
-        public IEntityViewBuilder[] entityViewsToBuild
-        {
-            get { return entityViewBuilders; }
-        }
-        
-        public static readonly IEntityViewBuilder[] entityViewBuilders;
+        public IEntityBuilder[] entitiesToBuild => _entityBuilders;
     }
 }

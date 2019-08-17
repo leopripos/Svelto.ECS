@@ -1,53 +1,47 @@
-﻿using Svelto.ECS.Internal;
-
-#if ENGINE_PROFILER_ENABLED && UNITY_EDITOR
-using Svelto.ECS.Profiler;
-#endif
-
-namespace Svelto.ECS
+﻿namespace Svelto.ECS
 {
     public partial class EnginesRoot
     {
         class GenericEntityFactory : IEntityFactory
         {
-            readonly DataStructures.WeakReference<EnginesRoot> _weakEngine;
-
             public GenericEntityFactory(DataStructures.WeakReference<EnginesRoot> weakReference)
             {
                 _weakEngine = weakReference;
             }
 
-            public void BuildEntity<T>(int entityID, object[] implementors) where T : IEntityDescriptor, new()
+            public EntityStructInitializer BuildEntity<T>(uint entityID,  ExclusiveGroup.ExclusiveGroupStruct groupStructId, object[] implementors) where T : IEntityDescriptor, new()
             {
-                _weakEngine.Target.BuildEntity<T>(entityID, implementors);
+                return _weakEngine.Target.BuildEntity<T>(new EGID(entityID, groupStructId), implementors);
             }
 
-            public void BuildEntity(int entityID, EntityDescriptorInfo entityDescriptor, object[] implementors = null)
+            public EntityStructInitializer BuildEntity<T>(EGID egid, object[] implementors) where T : IEntityDescriptor, new()
             {
-                _weakEngine.Target.BuildEntity(entityID, entityDescriptor, implementors);
+                return _weakEngine.Target.BuildEntity<T>(egid, implementors);
             }
 
-            public void BuildEntityInGroup<T>(int entityID, int groupID, object[] implementors)
-                where T : IEntityDescriptor, new()
+#if REAL_ID                    
+            public EntityStructInitializer BuildEntity<T>(ExclusiveGroup.ExclusiveGroupStruct groupID, object[] implementors = null) where T : IEntityDescriptor, new()
             {
-                _weakEngine.Target.BuildEntityInGroup<T>(entityID, groupID, implementors);
+                return _weakEngine.Target.BuildEntity<T>(groupID, implementors);
+            }
+#endif
+
+            public EntityStructInitializer BuildEntity<T>(EGID egid, T entityDescriptor, object[] implementors)  where T:IEntityDescriptor
+            {
+                return _weakEngine.Target.BuildEntity(egid, entityDescriptor, implementors);
             }
 
-            public void BuildEntityInGroup(int entityID, int groupID, EntityDescriptorInfo entityDescriptor,
-                                           object[] implementors)
+            public EntityStructInitializer BuildEntity<T>(uint entityID,  ExclusiveGroup.ExclusiveGroupStruct groupStructId, T descriptorEntity, object[] implementors)  where T:IEntityDescriptor
             {
-                _weakEngine.Target.BuildEntityInGroup(entityID, groupID, entityDescriptor, implementors);
-            }
-
-            public void PreallocateEntitySpace<T>(int size) where T : IEntityDescriptor, new()
-            {
-                _weakEngine.Target.Preallocate<T>(ExclusiveGroups.StandardEntity, size);
+                return _weakEngine.Target.BuildEntity(new EGID(entityID, groupStructId), descriptorEntity, implementors);
             }
             
-            public void PreallocateEntitySpaceInGroup<T>(int groupID, int size) where T : IEntityDescriptor, new()
+            public void PreallocateEntitySpace<T>(ExclusiveGroup.ExclusiveGroupStruct groupStructId, uint size) where T : IEntityDescriptor, new()
             {
-                _weakEngine.Target.Preallocate<T>(groupID, size);
+                _weakEngine.Target.Preallocate<T>(groupStructId, size);
             }
+            
+            readonly DataStructures.WeakReference<EnginesRoot> _weakEngine;
         }
     }
 }
